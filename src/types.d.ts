@@ -11,7 +11,7 @@ export interface Edge {
   name?: string;
 }
 
-export class Graph<NodeLabel = any, EdgeLabel = any> {
+export class Graph<NodeLabel = any, EdgeLabel = any, GraphMetaInfo = any> {
   constructor(options?: GraphOptions);
 
   /**
@@ -363,14 +363,14 @@ export class Graph<NodeLabel = any, EdgeLabel = any> {
    * @argument label - label value.
    * @returns the graph, allowing this to be chained with other functions.
    */
-  setGraph(label: string): Graph<NodeLabel, EdgeLabel>;
+  setGraph(label: GraphMetaInfo): Graph<NodeLabel, EdgeLabel>;
 
   /**
    * Gets the graph label.
    *
    * @returns currently assigned label for the graph or undefined if no label assigned.
    */
-  graph(): void | string;
+  graph(): void | GraphMetaInfo;
 
   /**
    * Gets the number of nodes in the graph.
