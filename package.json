@@ -1,7 +1,7 @@
 {
-  "name": "graph",
-  "version": "0.2.5",
-  "description": "Layout algorithms for visualizing directed acylic graphs.",
+  "name": "graphslib",
+  "version": "0.0.0",
+  "description": "acylic graphs.",
   "keywords": [
     "graph",
     "dot",
