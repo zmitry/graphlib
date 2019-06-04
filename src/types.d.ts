@@ -1,4 +1,4 @@
-declare module "graph" {
+declare module "graphslib" {
   export interface GraphOptions {
     directed?: boolean; // default: true.
     multigraph?: boolean; // default: false.
