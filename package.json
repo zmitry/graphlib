@@ -11,6 +11,7 @@
   "main": "dist/graph.cjs.js",
   "module": "dist/graph.es.js",
   "jsnext:main": "src/index.js",
+  "types": "./src/types.d.ts",
   "scripts": {
     "format": "prettier --write index.js 'src/**/*.js' 'test/**/*.js'",
     "lint": "eslint index.js src test && prettier --check index.js 'src/**/*.js' 'test/**/*.js'",
