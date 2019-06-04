@@ -5,6 +5,6 @@ workflow "New workflow" {
 
 action "GitHub Action for AWS" {
   uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
-  runs = "update-label"
+  runs = "npm run update-label"
   secrets = ["GITHUB_TOKEN"]
 }
