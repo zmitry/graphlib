@@ -13,6 +13,7 @@
   "jsnext:main": "src/index.js",
   "types": "./src/types.d.ts",
   "scripts": {
+    "update-label": "npm version patch && git push --tags",
     "format": "prettier --write index.js 'src/**/*.js' 'test/**/*.js'",
     "lint": "eslint index.js src test && prettier --check index.js 'src/**/*.js' 'test/**/*.js'",
     "build": "rm -rf dist && mkdir dist && rollup --config",
