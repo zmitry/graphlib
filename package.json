@@ -1,0 +1,43 @@
+{
+  "name": "graph",
+  "version": "0.2.5",
+  "description": "Layout algorithms for visualizing directed acylic graphs.",
+  "keywords": [
+    "graph",
+    "dot",
+    "graphviz-dot"
+  ],
+  "license": "MIT",
+  "main": "dist/graph.cjs.js",
+  "module": "dist/graph.es.js",
+  "jsnext:main": "src/index.js",
+  "scripts": {
+    "format": "prettier --write index.js 'src/**/*.js' 'test/**/*.js'",
+    "lint": "eslint index.js src test && prettier --check index.js 'src/**/*.js' 'test/**/*.js'",
+    "build": "rm -rf dist && mkdir dist && rollup --config",
+    "test": "jest",
+    "todo": "grep -nrEI 'FIXME|TODO|XXX' index.js src test"
+  },
+  "peerDependencies": {
+    "lodash": "*"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-typescript": "^7.3.3",
+    "rollup-plugin-typescript": "^1.0.1",
+    "typescript": "^3.5.1",
+    "jest": "^24.8.0",
+    "@babel/core": "^7.4.5",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.8.0",
+    "eslint": "^5.14.0",
+    "http-server": "^0.11.1",
+    "package-preamble": "^0.1.0",
+    "prettier": "^1.16.4",
+    "rollup": "^1.13.1",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^5.0.1",
+    "rollup-plugin-terser": "^5.0.0"
+  }
+}
