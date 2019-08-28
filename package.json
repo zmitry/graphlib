@@ -1,6 +1,6 @@
 {
-  "name": "graphslib",
-  "version": "0.0.5",
+  "name": "@zmitry/graphlib",
+  "version": "0.0.7",
   "description": "acylic graphs.",
   "keywords": [
     "graph",

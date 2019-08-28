@@ -406,4 +406,8 @@ export class Graph<NodeLabel = any, EdgeLabel = any, GraphMetaInfo = any> {
 }
 export function writeJSON(graph: Graph): Object;
 export function readJSON<N = any, L = any>(graphJSON: object): Graph<N, L>;
-export function writeDot<N, L>(g: Graph<N, L>): string;
+export function writeDot<N, L>(
+  g: Graph<N, L>,
+  intend?: string,
+  pickAttr: (d: any) => object
+): string;

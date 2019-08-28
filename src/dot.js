@@ -1,8 +1,6 @@
-import { each, isObject, map } from "lodash";
+import { each, isObject, map, toString } from "lodash";
 
-const UNESCAPED_ID_PATTERN = /^[a-zA-Z\200-\377_][a-zA-Z\200-\377_0-9]*$/;
-
-export function writeOne(g, intend = "") {
+export function writeDot(g, intend = "", pickAttrs = (d) => d) {
   const ec = g.isDirected() ? "->" : "--";
   const writer = makeWriter(intend);
 
@@ -30,61 +28,66 @@ export function writeOne(g, intend = "") {
   writer.writeLine("}");
 
   return writer.toString();
-}
 
-function writeSubgraph(g, v, writer) {
-  const children = g.isCompound() ? g.children(v) : g.nodes();
-  each(children, (w) => {
-    if (!g.isCompound() || !g.children(w).length) {
-      writeNode(g, w, writer);
-    } else {
-      writer.writeLine(`subgraph ${id(w)} {`);
-      writer.indent();
+  function writeNode(g, v, writer) {
+    writer.write(id(v));
+    writeAttrs(g.node(v), writer);
+    writer.writeLine();
+  }
 
-      if (isObject(g.node(w))) {
-        map(g.node(w), (val, key) => {
-          writer.writeLine(`${id(key)}=${id(val)};`);
-        });
+  function writeEdge(g, edge, ec, writer) {
+    const v = edge.v;
+    const w = edge.w;
+    const attrs = g.edge(edge);
+
+    writer.write(`${id(v)} ${ec} ${id(w)}`);
+    writeAttrs(attrs, writer);
+    writer.writeLine();
+  }
+
+  function writeAttrs(attrs, writer) {
+    if (isObject(attrs)) {
+      attrs = pickAttrs(attrs);
+
+      const attrStrs = map(attrs, (val, key) => `${id(key)}=${id(val)}`);
+      if (attrStrs.length) {
+        writer.write(` [${attrStrs.join(",")}]`);
       }
-
-      writeSubgraph(g, w, writer);
-      writer.unindent();
-      writer.writeLine("}");
     }
-  });
-}
+  }
 
-function writeNode(g, v, writer) {
-  writer.write(id(v));
-  writeAttrs(g.node(v), writer);
-  writer.writeLine();
-}
+  function writeSubgraph(g, v, writer) {
+    const children = g.isCompound() ? g.children(v) : g.nodes();
+    each(children, (w) => {
+      if (!g.isCompound() || !g.children(w).length) {
+        writeNode(g, w, writer);
+      } else {
+        writer.writeLine(`subgraph ${id(w)} {`);
+        writer.indent();
 
-function writeEdge(g, edge, ec, writer) {
-  const v = edge.v;
-  const w = edge.w;
-  const attrs = g.edge(edge);
+        if (isObject(g.node(w))) {
+          map(g.node(w), (val, key) => {
+            writer.writeLine(`${id(key)}=${id(val)};`);
+          });
+        }
 
-  writer.write(`${id(v)} ${ec} ${id(w)}`);
-  writeAttrs(attrs, writer);
-  writer.writeLine();
-}
-
-function writeAttrs(attrs, writer) {
-  if (isObject(attrs)) {
-    const attrStrs = map(attrs, (val, key) => `${id(key)}=${id(val)}`);
-    if (attrStrs.length) {
-      writer.write(` [${attrStrs.join(",")}]`);
-    }
+        writeSubgraph(g, w, writer);
+        writer.unindent();
+        writer.writeLine("}");
+      }
+    });
   }
 }
 
 function id(obj) {
-  if (typeof obj === "number" || obj.toString().match(UNESCAPED_ID_PATTERN)) {
+  if (!obj) {
+    return "1";
+  }
+  if (typeof obj === "number") {
     return obj;
   }
 
-  return `"${obj.toString().replace(/"/g, '\\"')}"`;
+  return `"${toString(obj).replace(/"/g, '\\"')}"`;
 }
 
 function makeWriter(INDENT = "") {
