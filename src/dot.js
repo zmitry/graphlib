@@ -67,6 +67,7 @@ export function writeDot(g, intend = "", pickAttrs = (d) => d) {
 
         if (isObject(g.node(w))) {
           map(g.node(w), (val, key) => {
+            // TODO if value is empty do not write it
             writer.writeLine(`${id(key)}=${id(val)};`);
           });
         }
